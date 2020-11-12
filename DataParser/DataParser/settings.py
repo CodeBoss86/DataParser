@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'channels',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+DJANGO_ALLOW_ASYNC_UNSAFE = True
 ROOT_URLCONF = 'DataParser.urls'
 
 TEMPLATES = [
@@ -78,6 +78,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'DataParser.wsgi.application'
+ASGI_APPLICATION = 'DataParser.asgi.application'
 
 
 # Database

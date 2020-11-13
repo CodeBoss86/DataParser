@@ -114,7 +114,7 @@ async def data_processor(files):
 
         data = await parse_data(file)
         # store data to DB
-        commit_to_DB(data)
+        await commit_to_DB(data)
 
     logger.info("Process Finished")
 

@@ -39,7 +39,7 @@ async def parse_csv(file):
     """
     Parse the CSV file and return its data
     """
-    logger.info("About to parse xml file")
+    logger.info("About to parse csv file")
     
     # read csv file into pandas dataframe
     dataframe = pd.read_csv(file, low_memory=False)

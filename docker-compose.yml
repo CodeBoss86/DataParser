@@ -1,0 +1,22 @@
+version: "3.8"
+   
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=DataParser
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=e30be82d1bc8bce929501701a738b93e0315f8e7c9825941a62cb64b154db0a4
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=200"
+      - "-c"
+      - "shared_buffers=256MB"
+  web:
+    build: .
+    command: python3 parser.py
+    # volumes:
+    #   - .:/code
+    depends_on:
+      - db

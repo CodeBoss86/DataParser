@@ -5,6 +5,7 @@ import xml.etree.ElementTree as ET
 from smart_open import open as smartOpen
 from core.models import ProductData
 from django.db import DatabaseError, transaction
+from asgiref.sync import sync_to_async
 
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -52,8 +53,8 @@ async def parse_csv(file):
 
     return products_data
 
-
-async def commit_to_DB(data):
+@sync_to_async
+def commit_to_DB(data):
     """
     Save data to DB
     """
@@ -113,6 +114,7 @@ async def data_processor(files):
     for file in files:
 
         data = await parse_data(file)
+
         # store data to DB
         await commit_to_DB(data)
 

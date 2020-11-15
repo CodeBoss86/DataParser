@@ -129,7 +129,7 @@ async def data_parser(files):
 
         # check if async task is done
         task_has_executed = False
-        while not task_executed:
+        while not task_has_executed:
             task_has_executed = task.done()
             try:
                 if task_has_executed:

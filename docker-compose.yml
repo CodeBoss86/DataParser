@@ -16,15 +16,22 @@ services:
       - "shared_buffers=256MB"
     ports:
       - 5432:5432
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
   app:
     build: .
-    command: python3 manage.py app
-    # volumes:
-    #   - .:/code
+    command: sh -c "python3 manage.py app"
+    volumes:
+      - .:/opt/DataParserToDB
+    links:
+      - db
+    depends_on:
+      - migration
+  migration:
+    build: .
+    image: app
+    command: python manage.py migrate
+    volumes:
+      - .:/opt/DataParserToDB
+    links:
+      - db
     depends_on:
       - db

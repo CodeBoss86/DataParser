@@ -12,4 +12,3 @@ RUN python3 -m pip install -r /opt/DataParserToDB/requirements.txt
 
 WORKDIR /opt/DataParserToDB/DataParser
 
-RUN python3 manage.py migrate

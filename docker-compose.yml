@@ -16,15 +16,31 @@ services:
       - "shared_buffers=256MB"
     ports:
       - 5432:5432
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
   app:
     build: .
-    command: python3 manage.py app
-    # volumes:
-    #   - .:/code
+    image: &img app:latest
+    command: sh -c "python3 manage.py app"
+    volumes:
+      - .:/opt/DataParserToDB/DataParser/data
+    links:
+      - db
+    depends_on:
+      - migration
+  migration:
+    build: .
+    image: app
+    command: sh -c "python3 manage.py wait_for_db && python manage.py migrate"
+    volumes:
+      - .:/opt/DataParserToDB/DataParser/data
+    links:
+      - db
     depends_on:
       - db
+  # workers:
+  #   build: .
+  #   image: *img
+  #   command: celery -A config worker -l info
+  # scheduler:
+  #   build: .
+  #   image: *img
+  #   command: celery -A config beat -l info

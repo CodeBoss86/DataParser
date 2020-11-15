@@ -18,13 +18,11 @@ hyperlink==20.0.1
 idna==2.10
 incremental==17.5.0
 ipykernel==5.3.4
-ipython==7.19.0
+ipython==7.16.1
 ipython-genutils==0.2.0
 jedi==0.17.2
 jupyter-client==6.1.7
 jupyter-core==4.6.3
-line-profiler==3.1.0
-numpy==1.19.4
 pandas==1.1.4
 parso==0.7.1
 pexpect==4.8.0
@@ -38,7 +36,6 @@ pycparser==2.20
 Pygments==2.7.2
 PyHamcrest==2.0.2
 pyOpenSSL==19.1.0
-pyprof2calltree==1.4.5
 python-dateutil==2.8.1
 python-dotenv==0.15.0
 pytz==2020.4
@@ -49,7 +46,7 @@ six==1.15.0
 smart-open==3.0.0
 sqlparse==0.4.1
 tornado==6.1
-traitlets==5.0.5
+traitlets==4.3.3
 Twisted==20.3.0
 txaio==20.4.1
 urllib3==1.26.0

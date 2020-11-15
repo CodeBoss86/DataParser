@@ -18,4 +18,4 @@ class ProductData(models.Model):
         return desc
 
     def get_absolute_url(self):
-        return producturl
+        return self.producturl

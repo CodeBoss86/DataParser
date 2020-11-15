@@ -28,7 +28,10 @@ services:
   migration:
     build: .
     image: app
-    command: python manage.py migrate
+    command: sh -c "
+              python3 manage.py wait_for_db &&
+              python manage.py migrate
+            "
     volumes:
       - .:/opt/DataParserToDB
     links:

@@ -12,10 +12,11 @@ class Command(BaseCommand):
         db_conn = None
         while not db_conn:
             try:
+                time.sleep(3)
                 # get the database with keyword 'default' from settings.py
                 db_conn = connections['default']
                 # prints success messge in green
                 self.stdout.write(self.style.SUCCESS('Database available :)'))
             except OperationalError:
-                self.stdout.write("Database unavailable :(, waiting 5 second ...")
-                time.sleep(5)
+                self.stdout.write("Database unavailable :(, waiting 2 second ...")
+                time.sleep(2)

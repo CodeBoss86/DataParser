@@ -3,8 +3,9 @@ version: "3.8"
 services:
   db:
     image: postgres
+    restart: always
     environment:
-      - POSTGRES_DB=DataParser
+      - POSTGRES_DB=DataParserToDB
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=e30be82d1bc8bce929501701a738b93e0315f8e7c9825941a62cb64b154db0a4
     command:
@@ -13,9 +14,16 @@ services:
       - "max_connections=200"
       - "-c"
       - "shared_buffers=256MB"
-  web:
+    ports:
+      - 5432:5432
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  app:
     build: .
-    command: python3 parser.py
+    command: python3 manage.py app
     # volumes:
     #   - .:/code
     depends_on:

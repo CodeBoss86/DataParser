@@ -18,9 +18,10 @@ services:
       - 5432:5432
   app:
     build: .
+    image: &img app:latest
     command: sh -c "python3 manage.py app"
     volumes:
-      - .:/opt/DataParserToDB
+      - .:/opt/DataParserToDB/DataParser/data
     links:
       - db
     depends_on:
@@ -28,13 +29,18 @@ services:
   migration:
     build: .
     image: app
-    command: sh -c "
-              python3 manage.py wait_for_db &&
-              python manage.py migrate
-            "
+    command: sh -c "python3 manage.py wait_for_db && python manage.py migrate"
     volumes:
-      - .:/opt/DataParserToDB
+      - .:/opt/DataParserToDB/DataParser/data
     links:
       - db
     depends_on:
       - db
+  # workers:
+  #   build: .
+  #   image: *img
+  #   command: celery -A config worker -l info
+  # scheduler:
+  #   build: .
+  #   image: *img
+  #   command: celery -A config beat -l info

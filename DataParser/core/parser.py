@@ -1,3 +1,4 @@
+import os
 import time
 import multiprocessing
 import asyncio
@@ -42,7 +43,10 @@ async def parse_xml(file):
             value = node.find(element).text
             data[element] = value
         products_data.append(ProductData(**data))
-        
+    
+    # remove file to free up memory space
+    os.remove(file)
+
     return products_data
 
 
@@ -60,6 +64,9 @@ async def parse_csv(file):
     df_to_dict = dataframe.to_dict('records')
 
     products_data = [ProductData(**data) for data in df_to_dict]
+
+    # remove file to free up memory space
+    os.remove(file)
 
     return products_data
 

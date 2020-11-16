@@ -54,7 +54,18 @@ services:
   workers:
     build: .
     image: *img
-    command: celery -A DataParser worker -l info -B
+    command: celery -A DataParser worker -l info
+    links:
+      - app
+      - redis
+    depends_on:
+      - app
+      - redis
+      
+  scheduler:
+    build: .
+    image: *img
+    command: celery -A DataParser beat -l info
     links:
       - app
       - redis

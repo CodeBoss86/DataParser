@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -154,3 +155,10 @@ CELERY_RESULT_PERSISTENT = False
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    'execute-data-parser-task': {
+        'task': 'tasks.run_app',
+        'schedule': crontab(minute='*/5')
+    },
+}

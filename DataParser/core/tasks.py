@@ -1,5 +1,5 @@
-from DataParser.celery import app as celery_app
 from .management.commands import app
+from celery import shared_task
 
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-@celery_app.task
+@shared_task
 def run_app():
     """
     Run app to pull data from feeds, parse and store to DB

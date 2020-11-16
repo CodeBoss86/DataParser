@@ -43,20 +43,13 @@ services:
     depends_on:
       - db
 
-  workers:
-    build: .
-    image: *img
-    command: celery -A DataParser worker -l info
-    links:
-      - app
-    depends_on:
-      - app
+  # workers:
+  #   build: .
+  #   image: *img
+  #   command: celery -A DataParser worker -l info
       
-  scheduler:
-    build: .
-    image: *img
-    command: celery -A DataParser beat -l info
-    links:
-      - app
-    depends_on:
-      - app
+  # scheduler:
+  #   build: .
+  #   image: *img
+  #   command: celery -A DataParser beat -l info
+

@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 
 import time
 import asyncio
+import threading
 
 import logging
 
@@ -10,6 +11,26 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 from core.parser import download_from_feeds, data_parser, data_processor
+
+
+# Function wrapper 
+def periodic_task(interval, times = -1):
+    def outer_wrap(function):
+        def wrap(*args, **kwargs):
+            stop = threading.Event()
+            def inner_wrap():
+                i = 0
+                while i != times and not stop.isSet():
+                    stop.wait(interval)
+                    function(*args, **kwargs)
+                    i += 1
+
+            t = threading.Timer(0, inner_wrap)
+            t.daemon = True
+            t.start()
+            return stop
+        return wrap
+    return outer_wrap
 
 
 class Command(BaseCommand):
@@ -43,12 +64,13 @@ class Command(BaseCommand):
         # asynchronously parse downloaded data
         parsed_data = asyncio.run(data_parser(file_names))
 
-        # process data to DB
+        # multi process data to DB
         data_processor(parsed_data)
 
         duration = time.time() - start_time
         logger.info(f"Duration {duration} seconds")
 
 
+    @periodic_task(300)
     def handle(self, *args, **kwargs):
         self.app()

@@ -20,7 +20,7 @@ services:
   redis:
     image: redis:alpine
     restart: always
-    port:
+    ports:
       - 6379:6379
     expose:
       - "6379"

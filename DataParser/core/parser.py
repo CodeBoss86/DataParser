@@ -83,9 +83,9 @@ async def fetch_file_from_url(url):
     """
     Download file from URL to local directory
     """
-    logger.info("Downloading file from URL to local directory data")
     
     file_name = url.split('.com/')[1][:-3]
+    logger.info(f"Downloading file :{file_name}: from URL to local directory data")
 
     with smartOpen(url, 'rb') as downloaded_file:
         with open(file_name, 'wb') as local_file:
@@ -99,10 +99,10 @@ async def download_from_feeds(urls):
     """
     Download data from URL feeds
     """
-    logger.info("Downloading data from URL feeds")
     
     async_tasks = list()
     for url in urls:
+        logger.info(f"Downloading data from URL :{url}:")
         task = asyncio.create_task(fetch_file_from_url(url))
         async_tasks.append(task)
 
@@ -113,7 +113,7 @@ async def data_parser(files):
     """
     Parse files holding data
     """
-    logger.info("processing data")
+    logger.info("processing downloaded files")
     parsed_data = list()
 
     for file in files:

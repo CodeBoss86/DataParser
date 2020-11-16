@@ -144,7 +144,6 @@ STATIC_URL = '/static/'
 
 ASGI_APPLICATION = 'DataParser.routing.application'
 
-
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
 

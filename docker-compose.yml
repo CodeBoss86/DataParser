@@ -42,9 +42,6 @@ services:
   redis:
     image: redis:alpine
     restart: always
-    command:
-      - "sysctl"
-      - "vm.overcommit_memory=1"
 
   workers:
     build: .

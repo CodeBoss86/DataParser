@@ -14,7 +14,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -149,7 +148,7 @@ CORS_ALLOW_CREDENTIALS = False
 
 # CELERY STUFF
 BROKER_URL = os.getenv('RABBIT_MQ_URL')
-CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')
+CELERY_RESULT_BACKEND = os.getenv('RESULT_BACKEND')
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'

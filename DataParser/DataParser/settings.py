@@ -148,10 +148,13 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
 
 # CELERY STUFF
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
 BROKER_TRANSPORT = 'redis'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
-timezone = 'UTC'
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
 
 CELERY_BEAT_SCHEDULE = {
     'execute-data-parser-task': {

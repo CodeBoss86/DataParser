@@ -1,4 +1,4 @@
-from config.celery import app as celery_app
+from DataParser.celery import app as celery_app
 from management.commands import app
 
 import logging

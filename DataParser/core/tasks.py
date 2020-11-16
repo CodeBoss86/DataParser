@@ -1,5 +1,5 @@
 from DataParser.celery import app as celery_app
-from management.commands import app
+from .management.commands import app
 
 import logging
 logging.basicConfig(level=logging.INFO)

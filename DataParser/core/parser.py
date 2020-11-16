@@ -28,7 +28,7 @@ async def parse_xml(file):
     Parse the XML file and return its data
     """
 
-    logger.info("About to parse xml file")
+    logger.info(f"parsing xml file :: {file}")
 
     xml_file = open(file, 'rb')
     # represent the xml file as a tree
@@ -50,7 +50,7 @@ async def parse_csv(file):
     """
     Parse the CSV file and return its data
     """
-    logger.info("About to parse csv file")
+    logger.info(f"parsing csv file :: {file}")
     
     # read csv file into pandas dataframe
     dataframe = pd.read_csv(file, low_memory=False)

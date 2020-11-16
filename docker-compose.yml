@@ -17,12 +17,6 @@ services:
     ports:
       - 5432:5432
 
-  redis:
-    image: redis:alpine
-    restart: always
-    expose:
-      - "6379"
-
   app:
     build: .
     image: &img app:latest
@@ -31,10 +25,8 @@ services:
       - .:/opt/DataParserToDB/DataParser/data
     links:
       - db
-      - redis
     depends_on:
       - migration
-      - redis
 
   migration:
     build: .
@@ -57,10 +49,8 @@ services:
     command: celery -A DataParser worker -l info
     links:
       - app
-      - redis
     depends_on:
       - app
-      - redis
       
   scheduler:
     build: .
@@ -68,7 +58,5 @@ services:
     command: celery -A DataParser beat -l info
     links:
       - app
-      - redis
     depends_on:
       - app
-      - redis

@@ -50,15 +50,7 @@ services:
   workers:
     build: .
     image: *img
-    command: celery -A DataParser worker -l info
-    depends_on:
-      - app
-      - redis
-
-  scheduler:
-    build: .
-    image: *img
-    command: celery -A DataParser beat -l info
+    command: celery -A DataParser worker -l info -B
     depends_on:
       - app
       - redis

@@ -50,7 +50,7 @@ services:
     depends_on:
       - app
       - redis
-      
+
   scheduler:
     build: .
     image: *img

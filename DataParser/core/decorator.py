@@ -1,5 +1,8 @@
+import threading
+
+
 # Function wrapper 
-def periodic_task(interval, times = -1):
+def periodic_task(interval, times=-1):
     def outer_wrap(function):
         def wrap(*args, **kwargs):
             stop = threading.Event()

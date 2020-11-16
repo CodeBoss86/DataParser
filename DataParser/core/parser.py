@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-# set start method
+# set start method for multiprocessing
 multiprocessing.set_start_method('fork')
 
 
@@ -28,7 +28,7 @@ async def parse_xml(file):
     Parse the XML file and return its data
     """
 
-    logger.info("About to parse xml file")
+    logger.info(f"parsing xml file :: {file}")
 
     xml_file = open(file, 'rb')
     # represent the xml file as a tree
@@ -50,7 +50,7 @@ async def parse_csv(file):
     """
     Parse the CSV file and return its data
     """
-    logger.info("About to parse csv file")
+    logger.info(f"parsing csv file :: {file}")
     
     # read csv file into pandas dataframe
     dataframe = pd.read_csv(file, low_memory=False)
@@ -83,9 +83,9 @@ async def fetch_file_from_url(url):
     """
     Download file from URL to local directory
     """
-    logger.info("Downloading file from URL to local directory data")
     
     file_name = url.split('.com/')[1][:-3]
+    logger.info(f"Downloading file :{file_name}: from URL to local directory data")
 
     with smartOpen(url, 'rb') as downloaded_file:
         with open(file_name, 'wb') as local_file:
@@ -99,10 +99,10 @@ async def download_from_feeds(urls):
     """
     Download data from URL feeds
     """
-    logger.info("Downloading data from URL feeds")
     
     async_tasks = list()
     for url in urls:
+        logger.info(f"Downloading data from URL :{url}:")
         task = asyncio.create_task(fetch_file_from_url(url))
         async_tasks.append(task)
 
@@ -113,7 +113,7 @@ async def data_parser(files):
     """
     Parse files holding data
     """
-    logger.info("processing data")
+    logger.info("processing downloaded files")
     parsed_data = list()
 
     for file in files:

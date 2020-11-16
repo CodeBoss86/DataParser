@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-# set start method
+# set start method for multiprocessing
 multiprocessing.set_start_method('fork')
 
 

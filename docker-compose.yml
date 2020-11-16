@@ -23,6 +23,9 @@ services:
     command: sh -c "python3 manage.py app"
     volumes:
       - .:/opt/DataParserToDB/DataParser/data
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=5379
     links:
       - db
     depends_on:
@@ -46,11 +49,17 @@ services:
   redis:
     image: redis:alpine
     restart: always
+    volumes:
+      - .:/opt/DataParserToDB/DataParser/data
+    port:
+      - 6379:6379
 
   workers:
     build: .
     image: *img
     command: celery -A DataParser worker -l info -B
+    links:
+      - redis
     depends_on:
       - app
       - redis

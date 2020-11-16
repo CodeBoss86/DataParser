@@ -16,6 +16,7 @@ services:
       - "shared_buffers=256MB"
     ports:
       - 5432:5432
+
   app:
     build: .
     image: &img app:latest
@@ -26,6 +27,7 @@ services:
       - db
     depends_on:
       - migration
+
   migration:
     build: .
     image: app
@@ -36,11 +38,23 @@ services:
       - db
     depends_on:
       - db
-  # workers:
-  #   build: .
-  #   image: *img
-  #   command: celery -A config worker -l info
-  # scheduler:
-  #   build: .
-  #   image: *img
-  #   command: celery -A config beat -l info
+
+  redis:
+    image: redis:alpine
+    restart: always
+
+  workers:
+    build: .
+    image: *img
+    command: celery -A config worker -l info
+    depends_on:
+      - app
+      - redis
+      
+  scheduler:
+    build: .
+    image: *img
+    command: celery -A config beat -l info
+    depends_on:
+      - app
+      - redis

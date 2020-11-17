@@ -27,7 +27,7 @@ README.md
 requirements.txt
 start.sh
 ```
-- In the current directory, run the shell script to execute the program
+- In the current directory, build the program by executing the command below based on your OS.
 #### For Linux or MAC
 ```bash
 sh start.sh
@@ -35,7 +35,7 @@ sh start.sh
 
 #### For Windows
 ```bash
-docker-compose up --build
+docker-compose up --build -d
 ```
 
 

@@ -79,11 +79,15 @@ def commit_to_DB(data):
     logger.info("Commiting data to DB")
     try:
         with transaction.atomic(): 
-            ProductData.objects.bulk_create(data, ignore_conflicts=True)
-            return True
+            # ProductData.objects.bulk_create(data, ignore_conflicts=True)
+            # return True
+            for obj in data:
+                try:
+                    obj.save()
+                except IntegrityError:
+                    continue
     except DatabaseError as err:
         logger.error(err)
-        return False
 
 
 async def fetch_file_from_url(url):

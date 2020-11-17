@@ -43,8 +43,8 @@ async def parse_xml(file):
             value = node.find(element).text
             data[element] = value
 
-        products_data.append(data)
-    
+        products_data.append(ProductData(**data))
+
     # remove file to free up memory space
     os.remove(file)
 
@@ -64,10 +64,12 @@ async def parse_csv(file):
     # convert dataframe to python object 
     df_to_dict = dataframe.to_dict('records')
 
+    products_data = [ProductData(**data) for data in df_to_dict]
+
     # remove file to free up memory space
     os.remove(file)
 
-    return df_to_dict
+    return products_data
 
 
 def commit_to_DB(data):
@@ -78,14 +80,12 @@ def commit_to_DB(data):
     logger.info("Commiting data to DB")
     try:
         with transaction.atomic(): 
-            for record in data:
-                try:
-                    ProductData.objects.update_or_create(record, **record)
-                except IntegrityError:
-                    continue
+            ProductData.objects.bulk_create(data)
+            return True
 
     except DatabaseError as err:
         logger.error(err)
+        return False
 
 
 async def fetch_file_from_url(url):

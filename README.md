@@ -28,12 +28,12 @@ requirements.txt
 start.sh
 ```
 - In the current directory, run the shell script to execute the program
-## For Linux or MAC
+#### For Linux or MAC
 ```bash
 sh start.sh
 ```
 
-## For Windows
+#### For Windows
 ```bash
 docker-compose up --build
 ```

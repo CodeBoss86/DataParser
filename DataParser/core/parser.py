@@ -6,7 +6,7 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 from smart_open import open as smartOpen
 from core.models import ProductData
-from django.db import DatabaseError, transaction
+from django.db import DatabaseError, transaction, IntegrityError
 from asgiref.sync import sync_to_async
 
 import logging
@@ -42,7 +42,6 @@ async def parse_xml(file):
         for element in data_columns:
             value = node.find(element).text
             data[element] = value
-        products_data.append(ProductData(**data))
     
     # remove file to free up memory space
     os.remove(file)
@@ -63,12 +62,12 @@ async def parse_csv(file):
     # convert dataframe to python object 
     df_to_dict = dataframe.to_dict('records')
 
-    products_data = [ProductData(**data) for data in df_to_dict]
+    # products_data = [ProductData(**data) for data in df_to_dict]
 
     # remove file to free up memory space
     os.remove(file)
 
-    return products_data
+    return df_to_dict
 
 
 def commit_to_DB(data):
@@ -79,13 +78,13 @@ def commit_to_DB(data):
     logger.info("Commiting data to DB")
     try:
         with transaction.atomic(): 
-            # ProductData.objects.bulk_create(data, ignore_conflicts=True)
-            # return True
-            for obj in data:
-                try:
-                    obj.save()
-                except IntegrityError:
-                    continue
+
+            try:
+                for obj in data:
+                    ProductData.objects.update_or_create(obj, **obj)
+            except IntegrityError:
+                continue
+
     except DatabaseError as err:
         logger.error(err)
 

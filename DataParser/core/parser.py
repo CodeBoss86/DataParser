@@ -62,8 +62,6 @@ async def parse_csv(file):
     # convert dataframe to python object 
     df_to_dict = dataframe.to_dict('records')
 
-    # products_data = [ProductData(**data) for data in df_to_dict]
-
     # remove file to free up memory space
     os.remove(file)
 

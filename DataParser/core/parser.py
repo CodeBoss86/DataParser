@@ -42,6 +42,8 @@ async def parse_xml(file):
         for element in data_columns:
             value = node.find(element).text
             data[element] = value
+
+        products_data.append(data)
     
     # remove file to free up memory space
     os.remove(file)

@@ -2,10 +2,7 @@ from django.core.management.base import BaseCommand
 
 import time
 import asyncio
-import threading
-from timeloop import Timeloop
-from datetime import timedelta
-
+import schedule
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -15,9 +12,6 @@ logger = logging.getLogger(__name__)
 from core.parser import download_from_feeds, data_parser, data_processor
 
 
-tl = Timeloop()
-
-@tl.job(interval=timedelta(minutes=3))
 def app():
     logger.info("app started")
 
@@ -49,11 +43,17 @@ def app():
     logger.info(f"Duration {duration} seconds")
 
 
+# schedule for periodic run
+schedule.every(3).minutes.do(app)
+
+
 class Command(BaseCommand):
     help = "Parse data feeds and store to DB"
 
     def handle(self, *args, **kwargs):
-        # start app and run periodically
+        #execute app and run periodically
         app()
-        tl.start(block=True)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
 

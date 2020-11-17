@@ -42,14 +42,3 @@ services:
       - db
     depends_on:
       - db
-
-  # workers:
-  #   build: .
-  #   image: *img
-  #   command: celery -A DataParser worker -l info
-      
-  # scheduler:
-  #   build: .
-  #   image: *img
-  #   command: celery -A DataParser beat -l info
-

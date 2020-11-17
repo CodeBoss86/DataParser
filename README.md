@@ -2,10 +2,6 @@
 
 DataParser_To_DB is a python appliation that downloads files in CSV and XML format from URL feeds, parses the downloaded files by fetching the information contained therein and stores the data retrieved in a database.
 
-## How does it works?
-
-It works by seamlessly connecting the magento webshop to user's accounting program through REST API endpoints provided to communicate with both the shop platform and accounting software. The application has been scheduled to pull data from magento API on an hourly basis and synchronize/push to Fortnox.
-
 ## Prerequisites
 - Install the latest version of [Python3](https://www.python.org/downloads/)
 - Install the latest version of [Docker-Engine](https://docs.docker.com/engine/install/)

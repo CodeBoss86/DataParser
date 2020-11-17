@@ -31,12 +31,11 @@ def app():
 
     # extract filenames into list
     file_names = [url.split('.com/')[1][:-3] for url in price_feeds]
-    print(file_names)
 
-    asynchronously parse downloaded data
+    # asynchronously parse downloaded data
     parsed_data = asyncio.run(data_parser(file_names))
 
-    multi process data to DB
+    # multi process data to DB
     data_processor(parsed_data)
 
     duration = time.time() - start_time

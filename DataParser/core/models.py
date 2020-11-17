@@ -1,7 +1,7 @@
 from django.db import models
 
 class ProductData(models.Model):
-    ident = models.TextField(null=True, unique=True)
+    ident = models.TextField(null=True)
     store_id = models.TextField(null=True)
     previous_price = models.TextField(null=True)
     price = models.TextField(null=True)

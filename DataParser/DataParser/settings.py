@@ -146,22 +146,3 @@ ASGI_APPLICATION = 'DataParser.routing.application'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
-
-# CELERY STUFF
-# CELERY_BROKER_URL = os.getenv('RABBIT_MQ_URL')
-# CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')
-# # CELERY_RESULT_BACKEND = 'rpc://'
-# # CELERY_RESULT_PERSISTENT = True
-# # CELERY_IMPORTS = ['celeryTasks']
-# CELERY_TIMEZONE = 'UTC'
-
-# CELERY_ACCEPT_CONTENT = ['application/json']
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TASK_SERIALIZER = 'json'
-
-# CELERY_BEAT_SCHEDULE = {
-#     'execute-data-parser-task': {
-#         'task': 'tasks.startApp',
-#         'schedule': crontab(minute='*/5')
-#     },
-# }

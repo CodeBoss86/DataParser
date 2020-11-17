@@ -78,12 +78,11 @@ def commit_to_DB(data):
     logger.info("Commiting data to DB")
     try:
         with transaction.atomic(): 
-
-            try:
-                for obj in data:
-                    ProductData.objects.update_or_create(obj, **obj)
-            except IntegrityError:
-                continue
+            for record in data:
+                try:
+                    ProductData.objects.update_or_create(record, **record)
+                except IntegrityError:
+                    continue
 
     except DatabaseError as err:
         logger.error(err)
